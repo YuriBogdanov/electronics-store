@@ -1,41 +1,78 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Сервисы
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("StorePolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
+// Конфигурация middleware
+app.UseCors("StorePolicy");
 app.UseHttpsRedirection();
 
-var summaries = new[]
+if (app.Environment.IsDevelopment())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-app.MapGet("/weatherforecast", () =>
+// Эндпоинты API
+app.MapGet("/products", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    var products = new[]
+    {
+        new Product(
+            Id: 1,
+            Name: "Ноутбук ASUS ROG Strix G15",
+            Category: "Laptops",
+            Price: 1499.99m,
+            Description: "Игровой ноутбук с процессором AMD Ryzen 9",
+            ImageUrl: "https://i.postimg.cc/rFGtsXDD/iphone.jpg",
+            Stock: 10
+        ),
+        new Product(
+            Id: 2,
+            Name: "Смартфон Samsung Galaxy S23 Ultra",
+            Category: "Smartphones",
+            Price: 1199.99m,
+            Description: "Флагманский смартфон с камерой 200 МП",
+            ImageUrl: "https://i.postimg.cc/rFGtsXDD/iphone.jpg",
+            Stock: 25
+        ),
+        new Product(
+            Id: 3,
+            Name: "Наушники Sony WH-1000XM5",
+            Category: "Headphones",
+            Price: 349.99m,
+            Description: "Беспроводные наушники с шумоподавлением",
+            ImageUrl: "https://i.postimg.cc/rFGtsXDD/iphone.jpg",
+            Stock: 15
+        )
+    };
+
+    return Results.Ok(products);
 })
-.WithName("GetWeatherForecast");
+.WithName("GetProducts")
+.WithOpenApi();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+// Модель данных
+public record Product(
+    int Id,
+    string Name,
+    string Category,
+    decimal Price,
+    string Description,
+    string ImageUrl,
+    int Stock
+);

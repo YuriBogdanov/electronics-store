@@ -1,0 +1,23 @@
+## C# ##
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+*.user
+*.suo
+*.vsp
+*.vspscc
+
+## Docker ##
+**/docker-compose*.yml
+**/Dockerfile*
+
+## IDE ##
+.idea/
+.project/
+.settings/
+
+## Общие временные файлы ##
+*.log
+*.tmp
+*.cache

@@ -1,0 +1,37 @@
+# macOS system files
+.DS_Store
+app/.DS_Store
+
+# Xcode user-specific files
+*.xcuserdatad
+*.xcworkspace
+*.xcuserdata
+
+# Build artifacts
+# macOS system files
+.DS_Store
+app/.DS_Store
+
+# Xcode user-specific files
+*.xcuserdatad
+*.xcworkspace
+*.xcuserdata
+
+# macOS system files
+.DS_Store
+app/.DS_Store
+
+# Xcode user-specific files
+*.xcuserdatad
+*.xcworkspace
+*.xcuserdat
+# Build artifacts
+DerivedData/
+build/
+
+# SwiftPM
+.build/
+.swiftpm/
+
+# Logs
+*.log

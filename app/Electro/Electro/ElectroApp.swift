@@ -7,30 +7,8 @@
 
 import SwiftUI
 import SwiftData
-//
-//@main
-//struct ElectroApp: App {
-//    var sharedModelContainer: ModelContainer = {
-//        let schema = Schema([
-//            Item.self,
-//        ])
-//        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-//
-//        do {
-//            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-//        } catch {
-//            fatalError("Could not create ModelContainer: \(error)")
-//        }
-//    }()
-//
-//    var body: some Scene {
-//        WindowGroup {
-//            ContentView()
-//        }
-//        .modelContainer(sharedModelContainer)
-//    }
-//}
 
+// MARK: - App Entry Point
 @main
 struct ElectroShopApp: App {
     @StateObject private var navigationVM = NavigationViewModel()
